@@ -121,6 +121,7 @@ public:
 
     private:
         Nodo *_actual;
+        Nodo *_raiz;
 
         iterator(Nodo *raiz);
     };

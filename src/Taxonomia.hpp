@@ -98,6 +98,7 @@ Taxonomia<T>::iterator::iterator() { }
 template<class T>
 Taxonomia<T>::iterator::iterator(Nodo *raiz) {
     _actual = raiz;
+    _raiz = raiz;
 }
 
 // Referencia mutable al nombre de la categoría actual.
@@ -126,7 +127,7 @@ void Taxonomia<T>::iterator::subcategoria(int i) {
 // Pre: el iterador está posicionado sobre una categoría.
 template<class T>
 bool Taxonomia<T>::iterator::esRaiz() const {
-    assert(false);
+    return _actual == _raiz;
 }
 
 // Ubica el iterador sobre la supercategoría de la categoría
