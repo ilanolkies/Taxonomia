@@ -111,7 +111,7 @@ T &Taxonomia<T>::iterator::operator*() const {
 // Pre: el iterador está posicionado sobre una categoría.
 template<class T>
 int Taxonomia<T>::iterator::cantSubcategorias() const {
-    assert(false);
+    return _actual->hijos.size();
 }
 
 // Ubica el iterador sobre la i-ésima subcategoría.
