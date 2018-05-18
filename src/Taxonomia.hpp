@@ -19,11 +19,18 @@ typename Taxonomia<T>::Nodo *Taxonomia<T>::_leerDe(istream &is) {
     if (_espiarProximoCaracter(is) == '{') {
         is.get();
         while (_espiarProximoCaracter(is) != '}') {
-            nodo->hijos.push_back(_leerDe(is));
+            _leerConPadre(is,nodo);
         }
         is.get();
     }
     return nodo;
+}
+
+template<class T>
+typename Taxonomia<T>::Nodo * Taxonomia<T>::_leerConPadre(istream &is, Taxonomia<T>::Nodo *padre) {
+    Taxonomia<T>::Nodo *nodo = _leerDe(is);
+    nodo->padre = padre;
+    padre->hijos.push_back(nodo);
 }
 
 template<class T>
@@ -136,7 +143,7 @@ bool Taxonomia<T>::iterator::esRaiz() const {
 // y además !esRaiz()
 template<class T>
 void Taxonomia<T>::iterator::supercategoria() {
-    assert(false);
+    _actual = _actual->padre;
 }
 
 // Compara dos iteradores por igualdad.

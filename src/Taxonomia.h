@@ -25,6 +25,7 @@ private:
     struct Nodo {
         T valor;
         vector<Nodo *> hijos;
+        Nodo *padre;
     };
 
     // Invariante:
@@ -41,6 +42,7 @@ private:
     int _espiarProximoCaracter(istream &is) const;
 
     Nodo *_leerDe(istream &is);
+    Nodo *_leerConPadre(istream &is, Nodo *padre);
 
     void _identar(ostream &os, int tab) const;
 
