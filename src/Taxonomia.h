@@ -120,7 +120,9 @@ public:
         void eliminarCategoria();
 
     private:
-        // COMPLETAR
+        Nodo *_actual;
+
+        iterator(Nodo *raiz);
     };
 
     // Devuelve un iterador válido al principio de la taxonomía.
