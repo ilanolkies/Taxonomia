@@ -119,7 +119,7 @@ int Taxonomia<T>::iterator::cantSubcategorias() const {
 // y además 0 <= i < cantSubcategorias().
 template<class T>
 void Taxonomia<T>::iterator::subcategoria(int i) {
-    assert(false);
+    _actual = _actual->hijos[i];
 }
 
 // Devuelve true sii la categoría actual es la raíz. 
