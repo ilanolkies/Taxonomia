@@ -177,7 +177,7 @@ template<class T>
 void Taxonomia<T>::iterator::subir() {
     if(esRaiz())
         _actual = nullptr;
-    else if(_actual->padre->pos < _actual->padre->padre->hijos.size()-1)
+    else if(_actual->padre!= _raiz && _actual->padre->pos < _actual->padre->padre->hijos.size()-1)
         _actual = _actual->padre->padre->hijos[_actual->padre->pos +1];
     else {
         _actual = _actual->padre;
@@ -192,10 +192,15 @@ void Taxonomia<T>::iterator::subir() {
 // Pre: el iterador está posicionado sobre una categoría.
 template<class T>
 void Taxonomia<T>::iterator::operator--() {
-    if(_actual->pos == 0)
+    if(esRaiz())
+        _actual== nullptr;
+    else if(_actual->pos == 0)
         _actual = _actual->padre;
-    else
-        _actual = _actual->padre->hijos[_actual->pos-1];
+    else {
+        _actual = _actual->padre->hijos[_actual->pos - 1];
+        while(_actual->hijos.size()>0)
+            _actual=_actual->hijos[_actual->hijos.size()-1];
+    }
 }
 
 // Inserta una subcategoría con el nombre indicado
