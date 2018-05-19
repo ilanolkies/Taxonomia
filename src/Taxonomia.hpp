@@ -154,7 +154,7 @@ void Taxonomia<T>::iterator::supercategoria() {
 template<class T>
 bool Taxonomia<T>::iterator::operator==(
         const Taxonomia<T>::iterator &otro) const {
-    assert(false);
+    return _actual == otro._actual;
 }
 
 // Ubica el iterador sobre la categoría siguiente a la actual
@@ -192,7 +192,10 @@ void Taxonomia<T>::iterator::subir() {
 // Pre: el iterador está posicionado sobre una categoría.
 template<class T>
 void Taxonomia<T>::iterator::operator--() {
-    assert(false);
+    if(_actual->pos == 0)
+        _actual = _actual->padre;
+    else
+        _actual = _actual->padre->hijos[_actual->pos-1];
 }
 
 // Inserta una subcategoría con el nombre indicado
