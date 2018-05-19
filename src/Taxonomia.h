@@ -26,6 +26,7 @@ private:
         T valor;
         vector<Nodo *> hijos;
         Nodo *padre;
+        int pos;
     };
 
     // Invariante:
@@ -42,7 +43,7 @@ private:
     int _espiarProximoCaracter(istream &is) const;
 
     Nodo *_leerDe(istream &is);
-    Nodo *_leerConPadre(istream &is, Nodo *padre);
+    Nodo *_leerConPadreYPos(istream &is, Nodo *padre, int pos);
 
     void _identar(ostream &os, int tab) const;
 
@@ -126,6 +127,8 @@ public:
         Nodo *_raiz;
 
         iterator(Nodo *raiz);
+
+        void subir();
     };
 
     // Devuelve un iterador válido al principio de la taxonomía.

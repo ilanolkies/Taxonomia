@@ -18,8 +18,10 @@ typename Taxonomia<T>::Nodo *Taxonomia<T>::_leerDe(istream &is) {
     is >> nodo->valor;
     if (_espiarProximoCaracter(is) == '{') {
         is.get();
+        int pos = 0;
         while (_espiarProximoCaracter(is) != '}') {
-            _leerConPadre(is,nodo);
+            _leerConPadreYPos(is, nodo, pos);
+            pos++;
         }
         is.get();
     }
@@ -27,9 +29,10 @@ typename Taxonomia<T>::Nodo *Taxonomia<T>::_leerDe(istream &is) {
 }
 
 template<class T>
-typename Taxonomia<T>::Nodo * Taxonomia<T>::_leerConPadre(istream &is, Taxonomia<T>::Nodo *padre) {
+typename Taxonomia<T>::Nodo *Taxonomia<T>::_leerConPadreYPos(istream &is, Taxonomia<T>::Nodo *padre, int pos) {
     Taxonomia<T>::Nodo *nodo = _leerDe(is);
     nodo->padre = padre;
+    nodo->pos = pos;
     padre->hijos.push_back(nodo);
 }
 
@@ -100,7 +103,7 @@ typename Taxonomia<T>::iterator Taxonomia<T>::end() {
 // Constructor por defecto del iterador.
 // (Nota: puede construir un iterador inválido).
 template<class T>
-Taxonomia<T>::iterator::iterator() { }
+Taxonomia<T>::iterator::iterator() {}
 
 template<class T>
 Taxonomia<T>::iterator::iterator(Nodo *raiz) {
@@ -161,7 +164,25 @@ bool Taxonomia<T>::iterator::operator==(
 // de la taxonomía.
 template<class T>
 void Taxonomia<T>::iterator::operator++() {
-    assert(false);
+    if (cantSubcategorias() > 0)
+        _actual = _actual->hijos[0];
+    else if (_actual->pos < _actual->padre->hijos.size() - 1)
+        _actual = _actual->padre->hijos[_actual->pos + 1];
+    else
+        subir();
+}
+
+// _actual->pos = _actual->padre->hijos.size() - 1
+template<class T>
+void Taxonomia<T>::iterator::subir() {
+    if(esRaiz())
+        _actual = nullptr;
+    else if(_actual->padre->pos < _actual->padre->padre->hijos.size()-1)
+        _actual = _actual->padre->padre->hijos[_actual->padre->pos +1];
+    else {
+        _actual = _actual->padre;
+        subir();
+    }
 }
 
 // Ubica el iterador sobre la categoría anterior a la actual
