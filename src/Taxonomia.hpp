@@ -203,7 +203,17 @@ void Taxonomia<T>::iterator::operator--() {
 // y además 0 <= i <= cantSubcategorias().
 template<class T>
 void Taxonomia<T>::iterator::insertarSubcategoria(int i, const T &nombre) {
-    assert(false);
+    Nodo *nodo = new Nodo();
+    nodo->valor = nombre;
+    nodo->padre = _actual;
+    _actual->hijos.push_back(nodo);
+    for (int j = _actual->hijos.size()-1; j>i; --j) {
+        Nodo *tmp = _actual->hijos[j];
+        _actual->hijos[j-1]->pos ++;
+        _actual->hijos[j] =_actual->hijos[j-1];
+        tmp->pos--;
+        _actual->hijos[j-1] =tmp;
+    }
 }
 
 // Elimina la categoría actual de la taxonomía
