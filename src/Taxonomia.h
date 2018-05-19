@@ -129,6 +129,7 @@ public:
         iterator(Nodo *raiz);
 
         void subir();
+        void eliminarNodo(Nodo *nodo);
     };
 
     // Devuelve un iterador válido al principio de la taxonomía.

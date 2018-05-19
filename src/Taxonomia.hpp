@@ -225,6 +225,24 @@ void Taxonomia<T>::iterator::insertarSubcategoria(int i, const T &nombre) {
 // y además !esRaiz().
 template<class T>
 void Taxonomia<T>::iterator::eliminarCategoria() {
-    assert(false);
+    Nodo *padre = _actual->padre;
+    for (int i = _actual->pos; i < padre->hijos.size()-1; ++i) {
+        Nodo *tmp = padre->hijos[i];
+        padre->hijos[i+1]->pos--;
+        padre->hijos[i] = padre->hijos[i+1];
+        tmp->pos++;
+        padre->hijos[i+1]=tmp;
+    }
+    eliminarNodo(padre->hijos[padre->hijos.size()-1]);
+    padre->hijos.pop_back();
+    _actual=padre;
 }
 
+template<class T>
+void Taxonomia<T>::iterator::eliminarNodo(Taxonomia<T>::Nodo *nodo) {
+    while(nodo->hijos.size()>0){
+        eliminarNodo(nodo->hijos[nodo->hijos.size()-1]);
+        nodo->hijos.pop_back();
+    }
+    delete(nodo);
+}
